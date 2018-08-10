@@ -17,4 +17,5 @@ const IdeaSchema = new Schema({
   }
 });
 
+// we name our model 'ideas' and is connected to IdeaSchema
 mongoose.model('ideas', IdeaSchema);
