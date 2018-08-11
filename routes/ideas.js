@@ -9,7 +9,7 @@ const Idea = mongoose.model('ideas');
 
 // Idea Index Page
 router.get('/', ensureAuthenticated, (req, res) => {
-  Idea.find({}) // this is the Idea model
+  Idea.find({user: req.user.id}) // this is the Idea model // find only the user that matches the login user
     .sort({date: 'desc'})
     .then(ideas => {
       res.render('ideas/index', {
@@ -29,9 +29,15 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     _id: req.params.id
   })
   .then(idea => {
-    res.render('ideas/edit', {
-      idea
-    })
+    // allowing only the login user to access edit
+    if(idea.user !== req.user.id){
+      req.flash('error_msg', 'Not authorized');
+      res.redirect('/ideas');
+    } else {
+      res.render('ideas/edit', {
+        idea
+      })
+    }
   })
 })
 
@@ -55,7 +61,8 @@ router.post('/', ensureAuthenticated, (req, res) => {
   } else {
     const newUser = {
       title: req.body.title,
-      details: req.body.details
+      details: req.body.details,
+      user: req.user.id
     }
     new Idea(newUser)
       .save()
