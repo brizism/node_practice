@@ -1,0 +1,16 @@
+{
+  "name": "StoryBooks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "Briseida Montiel <montielbriseida@gmail.com> (https://briseidamontiel.com)",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.2.7"
+  }
+}
