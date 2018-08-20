@@ -34,6 +34,18 @@ router.get('/add', ensureAuthenticated, (req, res) => {
   res.render('stories/add');
 });
 
+// Edit Story Form
+router.get('/edit/:id', ensureAuthenticated, (req, res) => {
+  Story.findOne({
+    _id: req.params.id
+  })
+  .then(story => {
+    res.render('stories/edit', {
+      story
+    })
+  })
+});
+
 // Process Add Story
 // when we are inside a route we don't need to have it on the path
 router.post('/', (req, res)=> {
