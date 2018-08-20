@@ -9,6 +9,7 @@ const {ensureAuthenticated, ensureGuest} = require('../helpers/auth');
 router.get('/', (req, res) => {
   Story.find({status: 'public'})
     .populate('user')
+    .sort({date: 'desc'})
     .then(stories => {
       res.render('stories/index', {
         stories
@@ -41,9 +42,15 @@ router.get('/edit/:id', ensureAuthenticated, (req, res) => {
     _id: req.params.id
   })
   .then(story => {
-    res.render('stories/edit', {
-      story
-    })
+    if(story.user.toString() !== req.user.id){
+      // console.log(typeof(story.user))
+      // console.log(typeof(req.user.id))
+      res.redirect('/stories');
+    } else {
+      res.render('stories/edit', {
+        story
+      })
+    }
   })
 });
 
