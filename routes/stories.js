@@ -25,9 +25,13 @@ router.get('/show/:id', (req, res) => {
   .populate('user')
   .populate('comments.commentUser')
   .then(story => {
-    res.render('stories/show', {
-      story
-    })
+    if(story.status === 'public' || req.user.id === story.user._id.toString()){
+      res.render('stories/show', {
+        story
+      })
+    } else {
+        res.redirect('/stories');
+    }
   })
 })
 
