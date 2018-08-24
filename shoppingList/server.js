@@ -8,7 +8,7 @@ const items = require('./routes/api/items');
 
 const app = express();
 
-// Bodyparser Middleware
+// No need of bodyParser middleware with Express v4.16.0
 app.use(express.json())
 
 // DB Config
